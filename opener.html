@@ -6,7 +6,7 @@
 	var urlArg = new URLSearchParams(location.search);
 	var yPos = urlArg.get('y');
 
-	// open 35 tabs (in reverse) of index.html
+	// open 36 tabs (in reverse) of index.html
 	for(var i = 35; i >= 0; i--) {
 		window.open("http://localhost/badapple/?x=" + i + "&y=" + yPos);
 	}
