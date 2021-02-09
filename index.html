@@ -1,0 +1,64 @@
+<!-- default favicon, to show when the tab is loaded  -->
+<link id="fav" rel="icon" href=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKJSURBVDhPpZNLS+phEMbVNLtoVmIpiUZFZBKBKw1yV7u2gQtzaSt3blxEBH2DoDZBQV+greDKXeQFEwWtKJLQSLpY4C09v3+v2OFw4NBpFq//9515Zp6ZeZS3223Z/5qi8/svo0az2fyjUqcyZ6VSiUQihUJhenp6eXlZo9HI5XIR9PLycnBwkEgkJiYmPB7P4uKiSqWSHMCwt7e3nZ2d0dHRvr6+sbGx3d1dXoSrVqsFg0GiydXT0wOSGh0WIuLi4mJhYUGU4pycnIxGo8J1fX3tcDi6rsHBQa/Xe3Nzg6vTc6vVoqBarVYoFEqlkuvj46Nwmc1mm80GTFhvb+/Dw8PT0xMupYigT7/fbzAYrq6u+vv77XY79IQLwj6fL51O09Hs7CyklpaW5ubmcH0NrFqtkvL5+ZniIyMjJpOJDj/hMtoGbLFYyPvx8QFz2PH+4z2Dp+bh4WGpVPpeLqLZCsvQ6XSrq6t3d3e8/NVYz+vraywWy2QyqVQKXUhgsQxapcn19fXuhn83Hk9OTtbW1ubn51dWVihzenoqgY+OjoaHh1kDRJhEIBC4vb2t1+sCxtrK5fL29jaaowDGB3La2tqShjYzM2M0GqFEKNz29vbC4bDb7Z6amuLl/v4+Ho+fn5+LdGLOcGSvUmVgoVBIr9d3dwMLKhCHfUqjI3KuQ0ND6IQ2k8mkBIbY5eXlxsYGUmGTwERo10Qu1IIXCcDo+PgYIhIYgy0D3NzcROG4iSNa1BQfnIgXFzX39/ff399BfYkE6RSLxbOzs2w2m8/nc7kc/0TSwwthMiGr1cqoXS6X0+nkRWLUBQvjSlZEyhobjQaMkC2zGB8f12q1YAYGBiAign8gT5nsF8rCojnFznRPAAAAAElFTkSuQmCC">
+<script>
+
+	el = document.getElementById("fav");
+
+	// all favicon are in base64 encoding to be simple (it's one pixel of black, grey or white)
+	black = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII="
+	white = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII="
+	grey = 	"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY6ivrwcAAv4BfhD/txkAAAAASUVORK5CYII="
+
+	// lum is the luminance of the pixel to print
+	function changeIcon(lum) {
+		if(lum == 0) {
+			el.href = black
+		} else if (lum == 1) {
+			el.href = grey
+		} else {
+			el.href = white
+		}
+	}
+
+	// go function is the func that go through every stat of a pixel (every frame)
+	function go() {
+		frame = 0;
+		changeIcon(0)
+
+		setInterval(function() {
+			changeIcon(pixelTimeline[frame])
+			frame++
+		}, 1000) // 1frame per second 
+	}
+
+	// function to wait till a certain time (for me it was 22h55)
+	// this is a terrible way to do it but it kinda works so ..
+	function waitForIt() {
+		var wait = setInterval(function() {
+			if (new Date().getMinutes() == 55) {
+				clearInterval(wait);
+				go();
+			}
+		}, 20)
+	}
+
+	// on init, it will ask the getRoute.php to get every pixel state for every frame giving a x and y position
+	function init() {
+		var urlArg = new URLSearchParams(location.search);
+		var xPos = urlArg.get('x');
+		var yPos = urlArg.get('y');
+
+		xhr = new XMLHttpRequest()
+		xhr.open("GET", "getRoute.php?x=" + xPos + "&y=" + yPos)
+		xhr.send()
+
+		xhr.onload = function() {
+			pixelTimeline = xhr.response
+			waitForIt()
+		}
+	}
+
+
+	init();
+
+</script>

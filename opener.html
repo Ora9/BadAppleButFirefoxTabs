@@ -1,0 +1,17 @@
+<script type="text/javascript">
+
+	// a tab to be on when the animation is going
+	window.open("about:blank");
+
+	var urlArg = new URLSearchParams(location.search);
+	var yPos = urlArg.get('y');
+
+	// open 35 tabs (in reverse) of index.html
+	for(var i = 35; i >= 0; i--) {
+		window.open("http://localhost/badapple/?x=" + i + "&y=" + yPos);
+	}
+
+	// and finaly close it self
+	setTimeout(self.close, 500);
+
+</script>

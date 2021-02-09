@@ -1,0 +1,3 @@
+this cmd is a windows command to open firefox within a new window with the url of the opener.html (and a window y axis value)
+
+"C:\Program Files\Mozilla Firefox\firefox.exe" -new-window http://localhost/badApple/opener.html?y=0
