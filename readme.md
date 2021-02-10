@@ -2,7 +2,7 @@
 
 This repo is an experiment about taking firefox to its limit by using tabs favicons as pixel for showing Bad Apple!!
 
-Video here :
+Video here : https://youtu.be/eb3uEZphsIE
 
 So basically I use 36 tabs on 26 windows (1008 tab in total)
 
@@ -42,5 +42,16 @@ Now, when it's time (literally, when it's was 21h55 for me) everything start
 
 And it's gone for 1h20 of rendering, at 90% ram (i have 8gigs), and 60% CPU
 
+## Thanks
 
+Thanks to A4 for the idea 
+
+- https://youtu.be/JjTqE69ZkUs
+- https://youtu.be/ke3T8hZtmzw
+
+And Edqe_ for the first implementation (18x14 pixels)
+
+- https://youtu.be/8QJ3DjIiiBM
+
+Thanks to both of them :)
 
